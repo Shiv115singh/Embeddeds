@@ -1,0 +1,24 @@
+
+void setup(){
+  pinMode(6,OUTPUT);
+  pinMode(7,OUTPUT);
+  pinMode(8,OUTPUT);
+ Serial.begin(9600);
+}
+void loop(){
+   ledblink();
+}
+void ledblink(){
+  digitalWrite(6,HIGH);
+  delay(100);
+  digitalWrite(6,LOW);
+  delay(100);
+  digitalWrite(7,HIGH);
+  delay(100);
+  digitalWrite(7,LOW);
+  delay(100);
+  digitalWrite(8,HIGH);
+  delay(100);
+  digitalWrite(8,LOW);
+  delay(100);
+}
