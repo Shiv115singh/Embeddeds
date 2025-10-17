@@ -1,0 +1,14 @@
+
+void setup(){
+ 
+}
+void loop(){
+ analogWrite(9,50);
+  delay(10000);
+  analogWrite(9,100);
+  delay(10000);
+  analogWrite(9,150);
+  delay(10000);
+  analogWrite(9,200);
+  delay(10000);
+}
