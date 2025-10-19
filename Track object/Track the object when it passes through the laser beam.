@@ -1,0 +1,16 @@
+int ldrout=A0;  //we are connecting analog pin to the Ldr sensor
+int buzzer=9;   // buzzer is connected to the circuit
+void setup(){
+  Serial .begin(9600);
+  pinMode(ldrout,INPUT);
+  pinMode(buzzer,OUTPUT);
+}
+void loop(){
+  int ldrvalue=analogRead(ldrout);
+  if(ldrvalue>500){
+    Serial.println("Rat detected");
+    digitalWrite(buzzer,HIGH);
+  }else{
+    digitalWrite(buzzer,LOW);  
+  }
+}
