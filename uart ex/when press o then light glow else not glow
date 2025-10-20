@@ -1,0 +1,21 @@
+int led = 2;
+
+void setup() {
+  Serial.begin(9600);        // Start serial communication at 9600 baud
+  pinMode(led, OUTPUT);      // Set digital pin 2 as output
+}
+
+void loop() {
+  while (!Serial.available()); // Wait here until a byte is received via serial
+
+  byte value = Serial.read();  // Read the incoming byte
+
+  switch (value) {
+    case 'O':                 // If the byte is 'O' (uppercase)
+      digitalWrite(led, HIGH); // Turn LED ON
+      break;
+    case 'F':                 // If the byte is 'F' (uppercase)
+      digitalWrite(led, LOW);  // Turn LED OFF
+      break;
+  }
+}
