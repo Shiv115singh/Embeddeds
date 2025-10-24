@@ -1,0 +1,16 @@
+int led_buzz=13;
+int pirsen=2;
+void setup(){
+  Serial.begin(9600);
+  pinMode(led_buzz,OUTPUT);
+  pinMode(pirsen,INPUT);
+}
+void loop(){
+  if(digitalRead(pirsen)==0){
+    digitalWrite(led_buzz,HIGH);
+    Serial.println("motion dedicated");
+    delay(1000);
+  }else{
+  digitalWrite(led_buzz,LOW);
+  }
+}
