@@ -1,0 +1,12 @@
+
+int potentiometer = A0;  // Define the analog pin where the potentiometer is connected
+void setup() {
+  Serial.begin(9600);          // Initialize serial communication at 9600 bits per second
+  pinMode(potentiometer, INPUT); // Set A0 as an input pin (optional, analogRead sets it automatically)
+}
+void loop() {
+  int value = analogRead(potentiometer);  // Read analog value (0–1023)
+  Serial.println(value);                  // Send the value to the Serial Monitor
+  delay(1000);                            // Wait for 1 second
+}
+
