@@ -1,0 +1,39 @@
+int pot=A0;
+int motor=3;
+void setup(){
+  Serial.begin(9600);
+  pinMode(pot,INPUT);
+  pinMode(motor,OUTPUT);
+}
+void loop(){
+  Serial.println("potentiometer values are: ");
+  Serial.println(analogRead(pot));
+  int value=analogRead(pot)/4;
+  Serial.println("updated potentiometer values are: ");
+  Serial.println(value);
+  analogWrite(motor,value);
+}
+
+//update 
+
+
+int pot = A0;     // Potentiometer connected to analog pin A0
+int motor = 3;    // Motor (via a transistor or motor driver) on PWM pin 3
+
+void setup() {
+  Serial.begin(9600);  // Start serial communication for debugging
+  pinMode(pot, INPUT); // Set potentiometer pin as input
+  pinMode(motor, OUTPUT); // Set motor pin as output
+}
+void loop() {
+  Serial.println("potentiometer values are: ");
+  Serial.println(analogRead(pot));
+  
+  int value = analogRead(pot) / 4;  // Scale 0–1023 to 0–255 for PWM
+  
+  Serial.println("updated potentiometer values are: ");
+  Serial.println(value);
+  
+  analogWrite(motor, value);  // Output PWM signal to control motor speed
+}
+
