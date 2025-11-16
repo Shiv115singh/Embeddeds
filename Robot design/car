@@ -1,0 +1,81 @@
+int motL_A = 2;
+int motL_B = 3;
+int motR_A = 4;
+int motR_B = 5;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(motL_A, OUTPUT);
+  pinMode(motL_B, OUTPUT);
+  pinMode(motR_A, OUTPUT);
+  pinMode(motR_B, OUTPUT);
+
+  STOPP();  // motors off on start
+}
+
+void loop() {
+  while (!Serial.available());   // wait until a character arrives
+  byte value = Serial.read();
+
+  switch (value) {
+    case 'F':
+      FORWARD();
+      break;
+
+    case 'B':
+      BACKWARD();
+      break;
+
+    case 'R':
+      RIGHT();
+    delay(3000);
+      break;
+
+    case 'L':
+      LEFT();
+      delay(3000);
+      break;
+
+    case 'S':
+      STOPP();
+      break;
+  }
+}
+
+// ----------- Motor Functions -------------
+
+void FORWARD() {
+  digitalWrite(motL_A, HIGH);
+  digitalWrite(motL_B, LOW);
+  digitalWrite(motR_A, HIGH);
+  digitalWrite(motR_B, LOW);
+}
+
+void BACKWARD() {
+  digitalWrite(motL_A, LOW);
+  digitalWrite(motL_B, HIGH);
+  digitalWrite(motR_A, LOW);
+  digitalWrite(motR_B, HIGH);
+}
+
+void LEFT() {
+  digitalWrite(motL_A, LOW);
+  digitalWrite(motL_B, HIGH);
+  digitalWrite(motR_A, HIGH);
+  digitalWrite(motR_B, LOW);
+}
+
+void RIGHT() {
+  digitalWrite(motL_A, HIGH);
+  digitalWrite(motL_B, LOW);
+  digitalWrite(motR_A, LOW);
+  digitalWrite(motR_B, HIGH);
+}
+
+void STOPP() {
+  digitalWrite(motL_A, LOW);
+  digitalWrite(motL_B, LOW);
+  digitalWrite(motR_A, LOW);
+  digitalWrite(motR_B, LOW);
+}
