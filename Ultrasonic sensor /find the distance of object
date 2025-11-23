@@ -1,0 +1,35 @@
+int trigpin = 2;
+int echopin = 3;
+
+long duration_us;
+float distance_cm;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(trigpin, OUTPUT);
+  pinMode(echopin, INPUT);
+}
+
+void loop() {
+
+  // Make sure trigger pin starts LOW
+  digitalWrite(trigpin, LOW);
+  delayMicroseconds(2);
+
+  // Send a 10-microsecond HIGH pulse
+  digitalWrite(trigpin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigpin, LOW);
+
+  // Read echo pulse duration
+  duration_us = pulseIn(echopin, HIGH);
+
+  // Calculate distance (speed of sound 340 m/s)
+  distance_cm = duration_us * 0.034 / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(distance_cm);
+  Serial.println(" cm");
+
+  delay(500);
+}
