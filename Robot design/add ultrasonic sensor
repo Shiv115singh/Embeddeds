@@ -1,0 +1,94 @@
+int motL_A=2;
+int motL_B=3;
+int motR_A=4;
+int motR_B=5;
+int trigpin=6;
+int echopin=7;
+void setup(){
+  Serial.begin(9600);
+  pinMode(motL_A,OUTPUT);
+  pinMode(motL_B,OUTPUT);
+  pinMode(motR_A,OUTPUT);
+  pinMode(motR_B,OUTPUT);
+  pinMode(trigpin,OUTPUT);
+  pinMode(echopin,INPUT);
+  STOPP();
+}
+void loop(){
+  long duration, distance;
+  digitalWrite(trigpin,LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigpin,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigpin,LOW);
+  duration=pulseIn(echopin,HIGH);
+  distance=0.017*duration;
+  Serial.print("Distance :");
+  Serial.print(distance);
+  Serial.println("CM");
+  if(distance<10){
+    BACKWARD();
+    delay(500);
+    RIGHT();
+    delay(500);
+    STOPP();
+    delay(1000);
+  }
+  
+  if(Serial.available()){
+    char value=Serial.read();
+    command(value);
+  }
+  
+}
+void command(char value){
+  switch(value){
+    case 'F':
+    FORWARD();
+    break;
+    case 'B':
+    BACKWARD();
+    break;
+    case 'L':
+    LEFT();
+    delay(500);
+    break;
+    case 'R':
+    RIGHT();
+    delay(500);
+    break;
+    case 'S':
+    STOPP();
+    break;
+  }
+}
+void FORWARD(){
+  digitalWrite(motL_A,HIGH);
+  digitalWrite(motL_B,LOW);
+  digitalWrite(motR_A,HIGH);
+  digitalWrite(motR_B,LOW);
+}
+void BACKWARD(){
+  digitalWrite(motL_A,LOW);
+  digitalWrite(motL_B,HIGH);
+  digitalWrite(motR_A,LOW);
+  digitalWrite(motR_B,HIGH);
+}
+void LEFT(){
+  digitalWrite(motL_A,LOW);
+  digitalWrite(motL_B,HIGH);
+  digitalWrite(motR_A,HIGH);
+  digitalWrite(motR_B,LOW);
+}
+void RIGHT(){
+  digitalWrite(motL_A,HIGH);
+  digitalWrite(motL_B,LOW);
+  digitalWrite(motR_A,LOW);
+  digitalWrite(motR_B,HIGH);
+}
+void STOPP(){
+  digitalWrite(motL_A,LOW);
+  digitalWrite(motL_B,LOW);
+  digitalWrite(motR_A,LOW);
+  digitalWrite(motR_B,LOW);
+}
