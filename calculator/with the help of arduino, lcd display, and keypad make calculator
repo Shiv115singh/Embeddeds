@@ -1,0 +1,83 @@
+#include <Keypad.h>
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+// Keypad setup
+const byte ROWS = 4;
+const byte COLS = 4;
+
+char keys[ROWS][COLS] = {
+  {'1','2','3','+'},
+  {'4','5','6','-'},
+  {'7','8','9','*'},
+  {'C','0','=','/'}
+};
+
+byte rowPins[ROWS] = {9, 8, 7, 6};
+byte colPins[COLS] = {A0, A1, A2, A3};
+
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+long num1 = 0, num2 = 0;
+char op = 0;
+bool secondNumber = false;
+
+void setup() {
+  lcd.begin(16, 2);
+  lcd.print("Arduino Calc");
+  delay(1000);
+  lcd.clear();
+}
+
+void loop() {
+  char key = keypad.getKey();
+
+  if (key) {
+    if (key >= '0' && key <= '9') {
+      if (!secondNumber) {
+        num1 = num1 * 10 + (key - '0');
+        lcd.print(key);
+      } else {
+        num2 = num2 * 10 + (key - '0');
+        lcd.print(key);
+      }
+    }
+
+    else if (key == '+' || key == '-' || key == '*' || key == '/') {
+      if (!secondNumber) {
+        op = key;
+        secondNumber = true;
+        lcd.print(key);
+      }
+    }
+
+    else if (key == '=') {
+      lcd.print('=');
+      long result;
+
+      switch (op) {
+        case '+': result = num1 + num2; break;
+        case '-': result = num1 - num2; break;
+        case '*': result = num1 * num2; break;
+        case '/': 
+          if (num2 != 0) result = num1 / num2;
+          else result = 0;
+          break;
+      }
+
+      lcd.print(result);
+      num1 = result;
+      num2 = 0;
+      secondNumber = false;
+    }
+
+    else if (key == 'C') {
+      lcd.clear();
+      num1 = 0;
+      num2 = 0;
+      secondNumber = false;
+      op = 0;
+    }
+  }
+}
